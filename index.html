@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Stoff-Detektive 🔍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-image {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #6b7280;
+            overflow: hidden;
+        }
+
+        .header-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .instructions {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .instructions h2 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .stoffe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stoff-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stoff-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stoff-card.kupfer { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .stoff-card.chlor { background: linear-gradient(135deg, #84cc16, #65a30d); }
+        .stoff-card.ethanol { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .stoff-card.eisen { background: linear-gradient(135deg, #dc2626, #991b1b); }
+
+        .stoff-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .stoff-header h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .stoff-header .formel {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .stoff-image {
+            width: 100%;
+            height: 150px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+        }
+
+        .stoff-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tabs {
+            display: flex;
+            background: white;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px 5px;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.3s;
+            border-right: 1px solid #d1d5db;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button:hover {
+            background: #e5e7eb;
+        }
+
+        .tab-button.active {
+            background: white;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: white;
+            min-height: 200px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .property {
+            margin-bottom: 12px;
+            padding: 8px;
+            background: #f9fafb;
+            border-radius: 5px;
+        }
+
+        .property-label {
+            font-weight: bold;
+            color: #374151;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        .property-value {
+            color: #6b7280;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .steckbrief-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid #e5e7eb;
+        }
+
+        .steckbrief-section h2 {
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .steckbrief-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .steckbrief-form {
+            background: #f9fafb;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #d1d5db;
+        }
+
+        .steckbrief-form h3 {
+            color: #374151;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .steckbrief-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .steckbrief-result.kupfer-result {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 3px solid #f97316;
+            color: #92400e;
+        }
+
+        .steckbrief-result.chlor-result {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 3px solid #84cc16;
+            color: #14532d;
+        }
+
+        .steckbrief-result.ethanol-result {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 3px solid #3b82f6;
+            color: #1e3a8a;
+        }
+
+        .steckbrief-result.eisen-result {
+            background: linear-gradient(135deg, #fecaca, #fca5a5);
+            border: 3px solid #dc2626;
+            color: #7f1d1d;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vergleich-section {
+            background: #dcfce7;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .vergleich-section h2 {
+            color: #166534;
+            margin-bottom: 20px;
+        }
+
+        .vergleich-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .vergleich-button:hover {
+            transform: scale(1.05);
+        }
+
+        .vergleich-button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 768px) {
+            .steckbrief-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .tab-button {
+                font-size: 0.75em;
+                padding: 10px 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-image">
+                <img src="sherlock_header.png" alt="Sherlock Holmes als Chemie-Detektiv">
+            </div>
+            <h1>🔍 Die Stoff-Detektive 🔬</h1>
+            <p class="subtitle">Welcher Stoff ist welcher? Finde es heraus!</p>
+        </header>
+
+        <div class="instructions">
+            <h2>🎯 Deine Mission:</h2>
+            <p>
+                Du bist ein Stoff-Detektiv! Klicke dich durch die vier geheimnisvollen Stoffe und sammle Informationen.
+                Fülle dann die beiden Steckbriefe aus und finde heraus, welcher Stoff zu welchem Steckbrief passt.
+                Aber Achtung: Nicht alle Informationen sind wichtig für die Identifizierung! 🕵️
+            </p>
+        </div>
+
+        <div class="stoffe-grid">
+            <!-- Stoff 1: Kupfer -->
+            <div class="stoff-card kupfer">
+                <div class="stoff-header">
+                    <h3>Geheimnisstoff A</h3>
+                    <p class="formel">Element</p>
+                </div>
+                <div class="stoff-image">
+                    <img src="kupfer.png" alt="Geheimnisstoff A">
+                </div>
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'kupfer-aussehen')">Aussehen</button>
+                    <button class="tab-button" onclick="switchTab(event, 'kupfer-physik')">Physik</button>
+                    <button class="tab-button" onclick="switchTab(event, 'kupfer-chemie')">Chemie</button>
+                    <button class="tab-button" onclick="switchTab(event, 'kupfer-fun')">Fun Facts</button>
+                </div>
+                <div id="kupfer-aussehen" class="tab-content active">
+                    <div class="property">
+                        <span class="property-label">Farbe:</span>
+                        <span class="property-value">Rötlich-braun, metallisch glänzend</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Aggregatzustand:</span>
+                        <span class="property-value">Fest (bei Raumtemperatur)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Besonderheiten:</span>
+                        <span class="property-value">Glänzende Oberfläche, läuft an der Luft grünlich an</span>
+                    </div>
+                </div>
+                <div id="kupfer-physik" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Schmelzpunkt:</span>
+                        <span class="property-value">1085°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Siedepunkt:</span>
+                        <span class="property-value">2562°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Dichte:</span>
+                        <span class="property-value">8,96 g/cm³</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Wärmeleitfähigkeit:</span>
+                        <span class="property-value">Sehr hoch ⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Elektrische Leitfähigkeit:</span>
+                        <span class="property-value">Sehr hoch ⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verformbarkeit:</span>
+                        <span class="property-value">Sehr gut verformbar (duktil)</span>
+                    </div>
+                </div>
+                <div id="kupfer-chemie" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Löslichkeit in Wasser:</span>
+                        <span class="property-value">Unlöslich</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Flammenfärbung:</span>
+                        <span class="property-value">Grün-blau (schwach)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verhalten beim Erhitzen:</span>
+                        <span class="property-value">Schmilzt bei hohen Temperaturen, oxidiert an der Luft (wird schwarz)</span>
+                    </div>
+                </div>
+                <div id="kupfer-fun" class="tab-content">
+                    <div class="fun-fact">
+                        <strong>🏺 Geschichte:</strong> Dieser Stoff wird seit über 10.000 Jahren von Menschen verwendet! Es war eines der ersten Metalle, die verarbeitet wurden.
+                    </div>
+                    <div class="fun-fact">
+                        <strong>💡 Verwendung:</strong> Man findet diesen Stoff in Münzen (1, 2 und 5 Cent), elektrischen Kabeln, Wasserleitungen und sogar in Musikinstrumenten!
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🗽 Freiheitsstatue:</strong> Die Freiheitsstatue ist komplett aus diesem Metall! Die grüne Farbe entsteht durch Oxidation.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stoff 2: Chlor -->
+            <div class="stoff-card chlor">
+                <div class="stoff-header">
+                    <h3>Geheimnisstoff B</h3>
+                    <p class="formel">Element</p>
+                </div>
+                <div class="stoff-image">
+                    <img src="chlor.png" alt="Geheimnisstoff B">
+                </div>
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'chlor-aussehen')">Aussehen</button>
+                    <button class="tab-button" onclick="switchTab(event, 'chlor-physik')">Physik</button>
+                    <button class="tab-button" onclick="switchTab(event, 'chlor-chemie')">Chemie</button>
+                    <button class="tab-button" onclick="switchTab(event, 'chlor-fun')">Fun Facts</button>
+                </div>
+                <div id="chlor-aussehen" class="tab-content active">
+                    <div class="property">
+                        <span class="property-label">Farbe:</span>
+                        <span class="property-value">Gelbgrün</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Aggregatzustand:</span>
+                        <span class="property-value">Gasförmig (bei Raumtemperatur)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Besonderheiten:</span>
+                        <span class="property-value">Stechender, unangenehmer Geruch - GIFTIG! ☠️</span>
+                    </div>
+                </div>
+                <div id="chlor-physik" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Schmelzpunkt:</span>
+                        <span class="property-value">-101°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Siedepunkt:</span>
+                        <span class="property-value">-34°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Dichte:</span>
+                        <span class="property-value">3,21 g/L (als Gas)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Wärmeleitfähigkeit:</span>
+                        <span class="property-value">Sehr gering ⭐</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Elektrische Leitfähigkeit:</span>
+                        <span class="property-value">Keine ❌</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verformbarkeit:</span>
+                        <span class="property-value">Nicht verformbar (ist ein Gas)</span>
+                    </div>
+                </div>
+                <div id="chlor-chemie" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Löslichkeit in Wasser:</span>
+                        <span class="property-value">Mäßig löslich (reagiert mit Wasser)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Flammenfärbung:</span>
+                        <span class="property-value">Keine (brennt nicht, aber hilft anderen Stoffen beim Brennen)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verhalten beim Erhitzen:</span>
+                        <span class="property-value">Bleibt gasförmig, dehnt sich aus</span>
+                    </div>
+                </div>
+                <div id="chlor-fun" class="tab-content">
+                    <div class="fun-fact">
+                        <strong>🏊 Schwimmbad:</strong> Das ist der typische "Schwimmbad-Geruch"! Dieser Stoff wird zur Desinfektion des Wassers verwendet und tötet Bakterien ab.
+                    </div>
+                    <div class="fun-fact">
+                        <strong>⚔️ Erste Weltkrieg:</strong> Dieses Gas wurde leider als Giftgas im Ersten Weltkrieg eingesetzt - eine sehr dunkle Seite der Geschichte.
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🧂 Kochsalz:</strong> In Verbindung mit Natrium wird aus diesem giftigen Gas unser harmloses Kochsalz (NaCl)!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stoff 3: Ethanol -->
+            <div class="stoff-card ethanol">
+                <div class="stoff-header">
+                    <h3>Geheimnisstoff C</h3>
+                    <p class="formel">Verbindung</p>
+                </div>
+                <div class="stoff-image">
+                    <img src="ethanol.png" alt="Geheimnisstoff C">
+                </div>
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'ethanol-aussehen')">Aussehen</button>
+                    <button class="tab-button" onclick="switchTab(event, 'ethanol-physik')">Physik</button>
+                    <button class="tab-button" onclick="switchTab(event, 'ethanol-chemie')">Chemie</button>
+                    <button class="tab-button" onclick="switchTab(event, 'ethanol-fun')">Fun Facts</button>
+                </div>
+                <div id="ethanol-aussehen" class="tab-content active">
+                    <div class="property">
+                        <span class="property-label">Farbe:</span>
+                        <span class="property-value">Farblos, klar</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Aggregatzustand:</span>
+                        <span class="property-value">Flüssig (bei Raumtemperatur)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Besonderheiten:</span>
+                        <span class="property-value">Charakteristischer, leicht stechender Geruch</span>
+                    </div>
+                </div>
+                <div id="ethanol-physik" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Schmelzpunkt:</span>
+                        <span class="property-value">-114°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Siedepunkt:</span>
+                        <span class="property-value">78°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Dichte:</span>
+                        <span class="property-value">0,79 g/cm³</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Wärmeleitfähigkeit:</span>
+                        <span class="property-value">Gering ⭐⭐</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Elektrische Leitfähigkeit:</span>
+                        <span class="property-value">Keine (als Reinstoff) ❌</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verformbarkeit:</span>
+                        <span class="property-value">Flüssig - fließt und passt sich an</span>
+                    </div>
+                </div>
+                <div id="ethanol-chemie" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Löslichkeit in Wasser:</span>
+                        <span class="property-value">Vollständig mischbar in jedem Verhältnis</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Flammenfärbung:</span>
+                        <span class="property-value">Brennt mit blauen Flamme 🔥</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verhalten beim Erhitzen:</span>
+                        <span class="property-value">Verdampft leicht, sehr gut brennbar!</span>
+                    </div>
+                </div>
+                <div id="ethanol-fun" class="tab-content">
+                    <div class="fun-fact">
+                        <strong>🍷 Getränke:</strong> Dieser Stoff ist der Alkohol in Wein, Bier und anderen alkoholischen Getränken. Aber Achtung: Für Kinder ist er giftig!
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🧴 Desinfektionsmittel:</strong> In Desinfektionsmitteln tötet dieser Stoff Bakterien und Viren ab - deshalb riecht es so typisch.
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🚗 Treibstoff:</strong> Diese Verbindung kann als umweltfreundlicherer Treibstoff für Autos verwendet werden!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stoff 4: Eisenthiocyanat -->
+            <div class="stoff-card eisen">
+                <div class="stoff-header">
+                    <h3>Geheimnisstoff D</h3>
+                    <p class="formel">Verbindung</p>
+                </div>
+                <div class="stoff-image">
+                    <img src="einsenrhodanid.png" alt="Geheimnisstoff D">
+                </div>
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab(event, 'eisen-aussehen')">Aussehen</button>
+                    <button class="tab-button" onclick="switchTab(event, 'eisen-physik')">Physik</button>
+                    <button class="tab-button" onclick="switchTab(event, 'eisen-chemie')">Chemie</button>
+                    <button class="tab-button" onclick="switchTab(event, 'eisen-fun')">Fun Facts</button>
+                </div>
+                <div id="eisen-aussehen" class="tab-content active">
+                    <div class="property">
+                        <span class="property-label">Farbe:</span>
+                        <span class="property-value">Intensiv dunkelrot, blutrote Lösung</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Aggregatzustand:</span>
+                        <span class="property-value">Als Lösung: flüssig / Als Feststoff: Pulver</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Besonderheiten:</span>
+                        <span class="property-value">Die rote Farbe ist extrem intensiv und auffällig! 🔴</span>
+                    </div>
+                </div>
+                <div id="eisen-physik" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Schmelzpunkt:</span>
+                        <span class="property-value">Zersetzt sich bei ca. 150°C</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Siedepunkt:</span>
+                        <span class="property-value">Zersetzt sich vorher</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Dichte:</span>
+                        <span class="property-value">Ca. 1,5 g/cm³ (Lösung)</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Wärmeleitfähigkeit:</span>
+                        <span class="property-value">Gering ⭐⭐</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Elektrische Leitfähigkeit:</span>
+                        <span class="property-value">Lösung leitet (enthält Ionen) ⚡</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verformbarkeit:</span>
+                        <span class="property-value">Als Lösung: fließt / Als Pulver: kann gestreut werden</span>
+                    </div>
+                </div>
+                <div id="eisen-chemie" class="tab-content">
+                    <div class="property">
+                        <span class="property-label">Löslichkeit in Wasser:</span>
+                        <span class="property-value">Gut löslich</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Flammenfärbung:</span>
+                        <span class="property-value">Keine spezifische Flammenfärbung</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-label">Verhalten beim Erhitzen:</span>
+                        <span class="property-value">Zersetzt sich in andere Stoffe</span>
+                    </div>
+                </div>
+                <div id="eisen-fun" class="tab-content">
+                    <div class="fun-fact">
+                        <strong>🔬 Nachweisreagenz:</strong> Diese Verbindung wird im Labor verwendet, um winzigste Mengen von Eisen nachzuweisen. Die rote Farbe ist so intensiv, dass man noch 0,000001 Gramm Eisen sehen kann!
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🎨 Künstler-Trick:</strong> Früher wurde dieser Stoff manchmal als roter Farbstoff verwendet, weil die Farbe so kräftig ist.
+                    </div>
+                    <div class="fun-fact">
+                        <strong>🧪 Chemie-Magie:</strong> Wenn man die Lösung verdünnt, bleibt die rote Farbe sichtbar - selbst bei extremer Verdünnung. Das zeigt, wie empfindlich dieser Nachweis ist!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steckbrief-Bereich -->
+        <div class="steckbrief-section">
+            <h2>📋 Fülle die Steckbriefe aus!</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #6b7280;">
+                Zwei der vier Stoffe sollen hier beschrieben werden. Suche dir die wichtigsten Eigenschaften heraus!
+            </p>
+
+            <div class="steckbrief-grid">
+                <!-- Steckbrief 1 -->
+                <div class="steckbrief-form">
+                    <h3>🔎 Steckbrief Nr. 1</h3>
+                    <div class="form-group">
+                        <label>Stoffname / Vermutung:</label>
+                        <input type="text" id="stoff1-name" placeholder="z.B. Geheimnisstoff A">
+                    </div>
+                    <div class="form-group">
+                        <label>Farbe:</label>
+                        <input type="text" id="stoff1-farbe" placeholder="z.B. gelbgrün">
+                    </div>
+                    <div class="form-group">
+                        <label>Aggregatzustand:</label>
+                        <input type="text" id="stoff1-aggregat" placeholder="fest / flüssig / gasförmig">
+                    </div>
+                    <div class="form-group">
+                        <label>Schmelzpunkt:</label>
+                        <input type="text" id="stoff1-schmelz" placeholder="z.B. -101°C">
+                    </div>
+                    <div class="form-group">
+                        <label>Siedepunkt:</label>
+                        <input type="text" id="stoff1-siede" placeholder="z.B. 78°C">
+                    </div>
+                    <div class="form-group">
+                        <label>Elektrische Leitfähigkeit:</label>
+                        <input type="text" id="stoff1-leit" placeholder="ja / nein / als Lösung">
+                    </div>
+                    <div class="form-group">
+                        <label>Verformbarkeit:</label>
+                        <input type="text" id="stoff1-verform" placeholder="z.B. gut verformbar">
+                    </div>
+                    <div class="form-group">
+                        <label>Besondere Merkmale:</label>
+                        <textarea id="stoff1-besonder" rows="3" placeholder="Was ist noch wichtig?"></textarea>
+                    </div>
+                    <div id="result1" class="steckbrief-result" style="display: none;"></div>
+                </div>
+
+                <!-- Steckbrief 2 -->
+                <div class="steckbrief-form">
+                    <h3>🔎 Steckbrief Nr. 2</h3>
+                    <div class="form-group">
+                        <label>Stoffname / Vermutung:</label>
+                        <input type="text" id="stoff2-name" placeholder="z.B. Geheimnisstoff B">
+                    </div>
+                    <div class="form-group">
+                        <label>Farbe:</label>
+                        <input type="text" id="stoff2-farbe" placeholder="z.B. rötlich-braun">
+                    </div>
+                    <div class="form-group">
+                        <label>Aggregatzustand:</label>
+                        <input type="text" id="stoff2-aggregat" placeholder="fest / flüssig / gasförmig">
+                    </div>
+                    <div class="form-group">
+                        <label>Schmelzpunkt:</label>
+                        <input type="text" id="stoff2-schmelz" placeholder="z.B. 1085°C">
+                    </div>
+                    <div class="form-group">
+                        <label>Siedepunkt:</label>
+                        <input type="text" id="stoff2-siede" placeholder="z.B. 2562°C">
+                    </div>
+                    <div class="form-group">
+                        <label>Elektrische Leitfähigkeit:</label>
+                        <input type="text" id="stoff2-leit" placeholder="ja / nein / als Lösung">
+                    </div>
+                    <div class="form-group">
+                        <label>Verformbarkeit:</label>
+                        <input type="text" id="stoff2-verform" placeholder="z.B. nicht verformbar (Gas)">
+                    </div>
+                    <div class="form-group">
+                        <label>Besondere Merkmale:</label>
+                        <textarea id="stoff2-besonder" rows="3" placeholder="Was ist noch wichtig?"></textarea>
+                    </div>
+                    <div id="result2" class="steckbrief-result" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vergleichs-Bereich -->
+        <div class="vergleich-section">
+            <h2>🎯 Jetzt kommt's drauf an!</h2>
+            <p style="margin-bottom: 20px;">
+                Du hast alle Informationen gesammelt. Jetzt überlege: Welche Eigenschaften helfen wirklich,
+                die Stoffe zu unterscheiden? Welche sind nur interessant, aber nicht wichtig für die Identifizierung?
+            </p>
+            <button class="vergleich-button" onclick="showResult()">
+                🔍 Lösung anzeigen
+            </button>
+            <div id="result" class="result">
+                <h3 style="color: #166534; margin-bottom: 15px;">📚 Die Auflösung:</h3>
+                <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                    <div style="background: #fff7ed; padding: 20px; border-radius: 10px; border: 3px solid #ea580c; margin-bottom: 20px;">
+                        <h4 style="color: #9a3412; margin-bottom: 15px; text-align: center;">🎯 Die vier Geheimnisstoffe sind:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: linear-gradient(135deg, #fed7aa, #fdba74); padding: 15px; border-radius: 8px; text-align: center;">
+                                <strong>Stoff A:</strong><br>Kupfer (Cu)
+                            </div>
+                            <div style="background: linear-gradient(135deg, #d9f99d, #bef264); padding: 15px; border-radius: 8px; text-align: center;">
+                                <strong>Stoff B:</strong><br>Chlor (Cl₂)
+                            </div>
+                            <div style="background: linear-gradient(135deg, #bfdbfe, #93c5fd); padding: 15px; border-radius: 8px; text-align: center;">
+                                <strong>Stoff C:</strong><br>Ethanol (C₂H₅OH)
+                            </div>
+                            <div style="background: linear-gradient(135deg, #fecaca, #fca5a5); padding: 15px; border-radius: 8px; text-align: center;">
+                                <strong>Stoff D:</strong><br>Eisenthiocyanat<br>(Fe(SCN)₃)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 15px;">
+                        <strong>🤔 Welche Eigenschaften waren wichtig?</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Aggregatzustand (fest, flüssig, gasförmig)</li>
+                            <li>Farbe</li>
+                            <li>Schmelz- und Siedepunkt</li>
+                            <li>Elektrische Leitfähigkeit</li>
+                            <li>Verformbarkeit</li>
+                            <li>Dichte</li>
+                            <li>Löslichkeit in Wasser</li>
+                            <li>Flammenfärbung / Brennbarkeit</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 15px;">
+                        <strong>💡 Welche Informationen waren weniger wichtig?</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Geschichte und Verwendung</li>
+                            <li>Wo der Stoff vorkommt</li>
+                            <li>Berühmte Bauwerke aus dem Stoff</li>
+                            <li>Wer den Stoff entdeckt hat</li>
+                            <li>Lustige Fakten und Geschichten</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><em>Diese Infos sind spannend, aber sie helfen nicht dabei, den Stoff zu identifizieren!</em></p>
+                    </div>
+
+                    <div style="background: #dcfce7; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 15px;">
+                        <strong>🎯 Wichtige Erkenntnis:</strong>
+                        <p style="margin-top: 10px;">
+                            Als Chemie-Detektiv muss man zwischen <strong>relevanten</strong> und <strong>irrelevanten</strong>
+                            Informationen unterscheiden können. Nur die Eigenschaften, die sich messen oder beobachten lassen,
+                            helfen uns wirklich dabei, einen Stoff eindeutig zu identifizieren!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(event, tabId) {
+            // Get the parent card
+            const card = event.target.closest('.stoff-card');
+
+            // Hide all tabs in this card
+            const allTabs = card.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active class from all buttons in this card
+            const allButtons = card.querySelectorAll('.tab-button');
+            allButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Show the selected tab
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to the clicked button
+            event.target.classList.add('active');
+        }
+
+        function showResult() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.add('show');
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Funktion zur Stofferkennung
+        function identifySubstance(formNumber) {
+            const prefix = 'stoff' + formNumber;
+
+            // Hole alle Werte aus dem Formular
+            const farbe = document.getElementById(prefix + '-farbe').value.toLowerCase();
+            const aggregat = document.getElementById(prefix + '-aggregat').value.toLowerCase();
+            const schmelz = document.getElementById(prefix + '-schmelz').value.toLowerCase();
+            const siede = document.getElementById(prefix + '-siede').value.toLowerCase();
+            const leit = document.getElementById(prefix + '-leit').value.toLowerCase();
+            const verform = document.getElementById(prefix + '-verform').value.toLowerCase();
+
+            // Scoring-System für jeden Stoff
+            let scores = {
+                kupfer: 0,
+                chlor: 0,
+                ethanol: 0,
+                eisen: 0
+            };
+
+            // Kupfer-Erkennung (Geheimnisstoff A)
+            if (farbe.includes('rot') || farbe.includes('braun') || farbe.includes('kupfer')) scores.kupfer += 2;
+            if (aggregat.includes('fest')) scores.kupfer += 2;
+            if (schmelz.includes('1085') || schmelz.includes('1000') || (schmelz.includes('hoch') && !schmelz.includes('-'))) scores.kupfer += 2;
+            if (siede.includes('2562') || siede.includes('2500') || siede.includes('hoch')) scores.kupfer += 1;
+            if (leit.includes('ja') || leit.includes('sehr') || leit.includes('hoch') || leit.includes('gut')) scores.kupfer += 2;
+            if (verform.includes('gut') || verform.includes('verform') || verform.includes('duktil')) scores.kupfer += 2;
+
+            // Chlor-Erkennung (Geheimnisstoff B)
+            if (farbe.includes('gelb') || farbe.includes('grün') || farbe.includes('gelbgrün')) scores.chlor += 2;
+            if (aggregat.includes('gas')) scores.chlor += 3;
+            if (schmelz.includes('-101') || schmelz.includes('-1') || schmelz.includes('negativ')) scores.chlor += 2;
+            if (siede.includes('-34') || siede.includes('-3') || (siede.includes('negativ') || siede.includes('-'))) scores.chlor += 2;
+            if (leit.includes('nein') || leit.includes('keine') || leit.includes('nicht')) scores.chlor += 2;
+            if (verform.includes('gas') || verform.includes('nicht')) scores.chlor += 1;
+
+            // Ethanol-Erkennung (Geheimnisstoff C)
+            if (farbe.includes('farblos') || farbe.includes('klar') || farbe.includes('transparent')) scores.ethanol += 2;
+            if (aggregat.includes('flüssig')) scores.ethanol += 2;
+            if (schmelz.includes('-114') || schmelz.includes('-1') || schmelz.includes('niedrig') || schmelz.includes('negativ')) scores.ethanol += 1;
+            if (siede.includes('78') || siede.includes('80') || siede.includes('niedrig')) scores.ethanol += 2;
+            if (leit.includes('nein') || leit.includes('keine') || leit.includes('nicht')) scores.ethanol += 2;
+            if (verform.includes('fließ') || verform.includes('flüssig')) scores.ethanol += 1;
+
+            // Eisenthiocyanat-Erkennung (Geheimnisstoff D)
+            if (farbe.includes('rot') && !farbe.includes('braun')) scores.eisen += 3;
+            if (farbe.includes('blutrot') || farbe.includes('dunkelrot')) scores.eisen += 2;
+            if (aggregat.includes('flüssig') || aggregat.includes('lösung')) scores.eisen += 2;
+            if (schmelz.includes('150') || schmelz.includes('zersetz')) scores.eisen += 2;
+            if (siede.includes('zersetz')) scores.eisen += 1;
+            if (leit.includes('lösung') || leit.includes('ion') || (leit.includes('ja') && aggregat.includes('lösung'))) scores.eisen += 2;
+
+            // Finde den Stoff mit dem höchsten Score
+            const maxScore = Math.max(scores.kupfer, scores.chlor, scores.ethanol, scores.eisen);
+
+            // Mindestens 4 Punkte für eine Identifizierung erforderlich
+            if (maxScore < 4) {
+                return null;
+            }
+
+            if (scores.kupfer === maxScore) return 'kupfer';
+            if (scores.chlor === maxScore) return 'chlor';
+            if (scores.ethanol === maxScore) return 'ethanol';
+            if (scores.eisen === maxScore) return 'eisen';
+
+            return null;
+        }
+
+        // Funktion zum Anzeigen des Ergebnisses
+        function showIdentification(formNumber) {
+            const substance = identifySubstance(formNumber);
+            const resultDiv = document.getElementById('result' + formNumber);
+
+            if (substance) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'steckbrief-result ' + substance + '-result';
+
+                const substanceNames = {
+                    'kupfer': 'Kupfer (Cu) - Geheimnisstoff A',
+                    'chlor': 'Chlor (Cl₂) - Geheimnisstoff B',
+                    'ethanol': 'Ethanol (C₂H₅OH) - Geheimnisstoff C',
+                    'eisen': 'Eisenthiocyanat (Fe(SCN)₃) - Geheimnisstoff D'
+                };
+
+                const emojis = {
+                    'kupfer': '🔶',
+                    'chlor': '☁️',
+                    'ethanol': '💧',
+                    'eisen': '🔴'
+                };
+
+                resultDiv.innerHTML = `
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">${emojis[substance]}</div>
+                    <div style="font-size: 1.1em;">Das ist vermutlich:</div>
+                    <div style="font-size: 1.4em; margin-top: 10px;">${substanceNames[substance]}</div>
+                `;
+            } else {
+                resultDiv.style.display = 'none';
+            }
+        }
+
+        // Event Listener für alle Eingabefelder
+        document.addEventListener('DOMContentLoaded', function() {
+            // Steckbrief 1
+            ['farbe', 'aggregat', 'schmelz', 'siede', 'leit', 'verform', 'besonder'].forEach(field => {
+                const element = document.getElementById('stoff1-' + field);
+                if (element) {
+                    element.addEventListener('input', () => showIdentification(1));
+                }
+            });
+
+            // Steckbrief 2
+            ['farbe', 'aggregat', 'schmelz', 'siede', 'leit', 'verform', 'besonder'].forEach(field => {
+                const element = document.getElementById('stoff2-' + field);
+                if (element) {
+                    element.addEventListener('input', () => showIdentification(2));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
