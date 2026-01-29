@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoff-Detektive - QR Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        .qr-code img {
+            display: block;
+            width: 400px;
+            height: 400px;
+        }
+
+        .link {
+            background: #f3f4f6;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 3px solid #667eea;
+        }
+
+        .link-text {
+            font-size: 1.3em;
+            color: #1f2937;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .instruction {
+            color: #374151;
+            font-size: 1.2em;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .qr-code img {
+                width: 300px;
+                height: 300px;
+            }
+
+            .container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Die Stoff-Detektive 🔬</h1>
+        <p class="subtitle">Scanne den QR-Code mit deinem iPad!</p>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://andreabahnsen.github.io/Stoff-Detektive/" alt="QR Code für Stoff-Detektive">
+        </div>
+
+        <p class="instruction">
+            📱 Öffne die Kamera-App auf deinem iPad<br>
+            👉 Halte die Kamera über den QR-Code<br>
+            🎯 Tippe auf die Benachrichtigung, die erscheint
+        </p>
+
+        <div class="link">
+            <p style="color: #6b7280; margin-bottom: 10px;">Oder gib diese Adresse ein:</p>
+            <p class="link-text">andreabahnsen.github.io/Stoff-Detektive</p>
+        </div>
+    </div>
+</body>
+</html>
